@@ -32,10 +32,12 @@ public class ContaService {
 			
 		}
 		
+		conta.setRegra(montaRegra(conta));
+		
 		return contaRepository.save(conta);
 	}
 	
-	public Integer calculaQuantidadeDiasAtraso(Conta conta) {
+	private Integer calculaQuantidadeDiasAtraso(Conta conta) {
 			
 		Integer milissegundos = (int) conta.getDataPagamento().getTime() - (int) conta.getDataVencimento().getTime();
 
@@ -43,7 +45,7 @@ public class ContaService {
 	
 	}
 	
-	public double calculaValorCorrigido(Conta conta) {
+	private double calculaValorCorrigido(Conta conta) {
 		
 		double valor = conta.getValor();
 		
@@ -53,7 +55,7 @@ public class ContaService {
 
 	}
 	
-	public double calculoJurosMulta(Conta conta) {
+	private double calculoJurosMulta(Conta conta) {
 		
 		Integer quantidadeDias = conta.getQuantidadeDias();
 		
@@ -68,6 +70,30 @@ public class ContaService {
 		} else {
 			
 			return (quantidadeDias * (0.3 / 100)) + 5.0 / 100;
+			
+		} 
+		
+	}
+	
+	private String montaRegra(Conta conta) {
+		
+		Integer quantidadeDias = conta.getQuantidadeDias();
+		
+		String regraUm = "Multa 2.0% e juros de 0.1% ao dia";
+		String regraDois = "Multa 3.0% e juros de 0.2% ao dia";
+		String regraTres = "Multa 5.0% e juros de 0.3% ao dia";
+		
+		if (quantidadeDias <= 3) {
+			
+			return regraUm;
+			
+		} else if (quantidadeDias <= 10) {
+			
+			return regraDois;
+			
+		} else {
+			
+			return regraTres;
 			
 		} 
 		

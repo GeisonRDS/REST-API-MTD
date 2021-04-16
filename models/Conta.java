@@ -37,6 +37,8 @@ public class Conta implements Serializable {
 	
 	@Column(nullable=false)
 	private Integer quantidadeDias;
+
+	private String regra;
 	
 	public Long getId() {
 		return id;
@@ -93,5 +95,15 @@ public class Conta implements Serializable {
 	public void setQuantidadeDias(Integer quantidadeDias) {
 		this.quantidadeDias = quantidadeDias;
 	}
+
+	public String getRegra() {
+		return regra;
+	}
+
+	public void setRegra(String regra) {
+		this.regra = regra;
+	}
+	
+	
 	
 }
